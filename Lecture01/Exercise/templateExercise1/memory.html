@@ -12,10 +12,125 @@
         <h1 class="text-center my-4">Memory Game</h1>
         <div id="game-board" class="row justify-content-center">
             <!-- Card elements will go here -->
+            <div class="card" onclick="flipCard(this)" data-symbol="★">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="★">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="▲">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="▲">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="●">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="●">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="❤">?</div>
+            <div class="card" onclick="flipCard(this)" data-symbol="❤">?</div>
+
         </div>
+        <h3 class="text-center my-4">Moves: <span id="moves-count">0</span></h3>
+        <h4 class="text-center my-4">Last Try: <span id="time">--.--</span> Seconds</h4>
+        <div id="message" class="text-center mt-4"></div>
     </div>
     <script>
         // Place script code here
+        let flippedCards = [];
+        let canFlip = true;
+        let matchedPairs = 0;
+        //2. moves
+        let moves = 0;
+        const totalPairs = 4;
+        //3. time
+        let startTime = new Date();
+        let endTime;
+        
+        //called when clicked
+        function flipCard(card) {
+            //start timer
+            if(moves === 0) {
+                startTime = new Date();
+            }
+
+            if(!canFlip) return;
+
+            //if flipped do nothing
+            if(card.classList.contains('flipped')) return;
+
+            //2 cards flipped - not more
+            if(flippedCards.length === 2) return;
+
+            //flip
+            card.classList.add('flipped');
+            //change ? to symbol
+            card.textContent = card.dataset.symbol; 
+            //add to array
+            flippedCards.push(card);
+
+            //display moves
+            moves++;
+            document.getElementById('moves-count').textContent = moves;
+
+            //if 2 flipped - check if match
+            if(flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+        
+        function checkMatch() {
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+            //compare symbols
+            if(card1.dataset.symbol === card2.dataset.symbol) {
+                //found -> check if game complete, empty flipped cards
+                matchedPairs++;
+
+                //1. bg color
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                }, 200);
+
+                //reset flipped cards
+                flippedCards = [];
+                checkGameComplete();
+            } else {
+                //no match -> delay, flip back, empty flipped cards
+                canFlip = false;
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '?'; 
+                    card2.textContent = '?'; 
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+        
+        function checkGameComplete() {
+            if(matchedPairs === totalPairs) {
+                setTimeout(() => {
+                    alert('Congratulations! You found all pairs!');
+                    resetGame();
+                }, 500);
+            }
+        }
+        function resetGame() {
+            //end timer
+            endTime = new Date();
+            var timeDiff = (endTime - startTime) / 1000;
+            document.getElementById('time').textContent = timeDiff.toFixed(2);
+            //reset timer
+            startTime = new Date();
+            
+            flippedCards = [];
+            canFlip = true;
+            matchedPairs = 0;
+
+            //get all card elements (with card class) - reset
+            const cards = document.getElementsByClassName('card');
+            for(let i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('flipped');
+                cards[i].classList.remove('matched');
+                cards[i].textContent = '?';
+            }
+            moves = 0;
+            document.getElementById('moves-count').textContent = moves;
+        }
     </script>
 </body>
 </html>
