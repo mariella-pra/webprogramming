@@ -6,31 +6,166 @@
     <title>Virtual Piano</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container text-center my-5">
         <h1>Virtual Piano</h1>
         <p>Press the following keys to play the notes:</p>
+        <!--
         <ul class="list-inline">
-            <li class="list-inline-item"><strong>A</strong> - C</li>
-            <li class="list-inline-item"><strong>S</strong> - D</li>
-            <li class="list-inline-item"><strong>D</strong> - E</li>
-            <li class="list-inline-item"><strong>F</strong> - F</li>
-            <li class="list-inline-item"><strong>G</strong> - G</li>
-            <li class="list-inline-item"><strong>H</strong> - A</li>
-            <li class="list-inline-item"><strong>J</strong> - B</li>
+            <li class="list-inline-item px-5"><strong>A</strong> - C</li>
+            <li class="list-inline-item px-5"><strong>S</strong> - D</li>
+            <li class="list-inline-item px-5"><strong>D</strong> - E</li>
+            <li class="list-inline-item px-5"><strong>F</strong> - F</li>
+            <li class="list-inline-item px-5"><strong>G</strong> - G</li>
+            <li class="list-inline-item px-5"><strong>H</strong> - A</li>
+            <li class="list-inline-item px-5"><strong>J</strong> - B</li>
         </ul>
-        <div id="piano" class="d-flex justify-content-center">
+        -->
+
+        <div id="piano" class="row">
             <!-- Piano keys with IDs for JavaScript interaction -->
-            <div class="key" id="keyC">C</div>
-            <div class="key" id="keyD">D</div>
-            <div class="key" id="keyE">E</div>
-            <div class="key" id="keyF">F</div>
-            <div class="key" id="keyG">G</div>
-            <div class="key" id="keyA">A</div>
-            <div class="key" id="keyB">B</div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>A</strong></span></div>
+                    <div id="keyC" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">C</span></div>
+                </div>
+
+                <div class="col">
+                    <!--<div class="row keyHotkey"><span class="note-label"><strong>A</strong></span></div>-->
+                    <div id="keyC" class="row key blackKey justify-content-end pb-2"><span class="note-label">C</span></div>
+                </div>
+                
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>S</strong></span></div>
+                    <div id="keyD" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">D</span></div>
+                </div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>D</strong></span></div>
+                    <div id="keyE" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">E</span></div>
+                </div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>F</strong></span></div>
+                    <div id="keyF" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">F</span></div>
+                </div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>G</strong></span></div>
+                    <div id="keyG" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">G</span></div>
+                </div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>H</strong></span></div>
+                    <div id="keyA" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">A</span></div>
+                </div>
+                <div class="col">
+                    <div class="row keyHotkey"><span class="note-label"><strong>J</strong></span></div>
+                    <div id="keyB" class="row key d-flex flex-column justify-content-end pb-2"><span class="note-label">B</span></div>
+                </div>
+                
+            
+                <!--
+                <div id="keyC" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">C</span>
+                </div>
+                <div id="keyD" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">D</span>
+                </div>
+                <div id="keyE" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">E</span>
+                </div>
+                <div id="keyF" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">F</span>
+                </div>
+                <div id="keyG" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">G</span>
+                </div>
+                <div id="keyA" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">A</span>
+                </div>
+                <div id="keyB" class="col key d-flex flex-column justify-content-end pb-2">
+                        <span class="note-label">B</span>
+                </div>
+                -->
+                
         </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("keydown", function(event) {
+        if (event.key === "a") {
+            playNote("C");
+        } else if (event.key === "s") {
+            playNote("D");
+        } else if (event.key === "d") {
+            playNote("E");
+        } else if (event.key === "f") {
+            playNote("F");
+        } else if (event.key === "g") {
+            playNote("G");
+        } else if (event.key === "h") {
+            playNote("A");
+        } else if (event.key === "j") {
+            playNote("B");
+        }
+        });
+
+        switch (event.key) {
+            case "a":
+                playNote("C");
+                break;
+            case "s":
+                playNote("D");
+                break;
+            case "d":
+                playNote("E");
+                break;
+            case "f":
+                playNote("F");
+                break;
+            case "g":
+                playNote("G");
+                break;
+            case "h":
+                playNote("A");
+                break;
+            case "j":
+                playNote("B");
+                break;
+        }
+        
+        document.getElementById("keyC").addEventListener("click", function() {
+        playNote("C");
+        });
+        document.getElementById("keyD").addEventListener("click", function() {
+        playNote("D");
+        });
+        document.getElementById("keyE").addEventListener("click", function() {
+        playNote("E");
+        });
+        document.getElementById("keyF").addEventListener("click", function() {
+        playNote("F");
+        });
+        document.getElementById("keyG").addEventListener("click", function() {
+        playNote("G");
+        });
+        document.getElementById("keyA").addEventListener("click", function() {
+        playNote("A");
+        });
+        document.getElementById("keyB").addEventListener("click", function() {
+        playNote("B");
+        });
+
+        function playNote(note) {
+            const keyElement = document.getElementById("key" + note);
+            keyElement.classList.add('pressed');
+            setTimeout(() => {
+                keyElement.classList.remove('pressed');
+            }, 250);
+            console.log("Playing note: " + note);
+            playSound(note);
+        }
+        function playSound(note) {
+            const audio = new Audio("/Lecture02/Exercise/templateExercise2/sounds/" + note.toUpperCase() + ".mp3");
+            audio.play();
+        }
+    </script>
 </body>
 </html>
