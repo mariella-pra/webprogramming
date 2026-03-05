@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,159 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1 class="text-center my-4">Memory Game</h1>
-        <div id="game-board" class="row justify-content-center">
-            <!-- Card elements will go here -->
-        </div>
+        <div id="game-board" class="row justify-content-center"></div>
+        <h3 class="text-center my-4">Moves: <span id="moves-count">0</span></h3>
+        <h3 class="text-center my-4">Matched Pairs: <span id="matched-pairs">0</span></h3>
+        <h4 class="text-center my-4">Last Try: <span id="time">--.--</span> Seconds</h4>
+        <div id="message" class="text-center mt-4"></div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        //1. Card Data Setup
+        let cards = ['★', '★', '▲', '▲', '●', '●', '❤', '❤'];
+        //3.1 Flip Logic
+        let flippedCards = [];
+        let canFlip = true;
+        let matchedPairs = 0;
+
+        let moves = 0;
+        //const totalPairs = 4;
+        const totalPairs = 4;
+        let startTime = new Date();
+        let endTime;
+
+        //2.1 Shuffle
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+            return array;
+        }
+        //2.2 Render
+        function renderBoard(cardsBase) {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+
+            const shuffledCards = shuffle(cards);
+
+            shuffledCards.forEach((symbol) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.setAttribute('onclick', 'flipCard(this)');
+                card.textContent = '?';
+                card.dataset.symbol = symbol;
+                gameBoard.appendChild(card);
+            });
+        }
+        renderBoard(cards);
+
+        //called when clicked
+        function flipCard(card) {
+            //start timer
+            if (moves === 0) {
+                startTime = new Date();
+            }
+
+            if (!canFlip || card.classList.contains('flipped')) return;
+
+            //3.2 only 2 flipped
+            if (flippedCards.length === 2) return;
+
+            //flip
+            card.classList.add('flipped');
+            //change ? to symbol
+            card.textContent = card.dataset.symbol;
+
+
+            //3.1 track flipped cards
+            flippedCards.push(card);
+
+            //display moves
+            moves++;
+            document.getElementById('moves-count').textContent = moves;
+
+            //if 2 flipped - check if match
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+
+            //3.3  if match -> keep flipped
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                //found -> check if game complete, empty flipped cards
+
+
+                //4.1 track matched pairs
+                matchedPairs++;
+                document.getElementById('matched-pairs').textContent = matchedPairs;
+
+                //bg color
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                }, 200);
+
+                //reset flipped cards
+                flippedCards = [];
+                checkGameComplete();
+            } else {
+                //3.3 no match -> delay, flip back, empty flipped cards
+                canFlip = false;
+                setTimeout(() => {
+                    resetCard(card1);
+                    resetCard(card2);
+                    flippedCards = [];
+                    canFlip = true;
+                }, 1000);
+            }
+        }
+
+        function checkGameComplete() {
+            //4.2 if complete -> alert
+            if (matchedPairs === totalPairs) {
+                setTimeout(() => {
+                    alert('Congratulations! You found all pairs!');
+                    resetGame();
+                }, 500);
+            }
+        }
+
+        function resetCard(card) {
+            card.classList.remove('flipped', 'matched');
+            card.textContent = '?';
+        }
+
+        //4.3 reset, reshuffle
+        function resetGame() {
+            //end and reset timer
+            endTime = new Date();
+            var timeDiff = (endTime - startTime) / 1000;
+            document.getElementById('time').textContent = timeDiff.toFixed(2);
+            startTime = new Date();
+
+            //reset variables
+            flippedCards = [];
+            canFlip = true;
+            matchedPairs = 0;
+
+            //get all card elements (with card class) - reset
+            const cards = document.getElementsByClassName('card');
+            for (let i = 0; i < cards.length; i++) {
+                resetCard(cards[i]);
+            }
+
+            //reset moves
+            moves = 0;
+            document.getElementById('moves-count').textContent = moves;
+
+            renderBoard();
+        }
+    </script>
 </body>
+
 </html>

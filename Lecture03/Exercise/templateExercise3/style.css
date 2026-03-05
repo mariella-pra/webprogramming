@@ -23,5 +23,10 @@ body {
 }
 
 .card.flipped {
+    background-color: #b39418;
+    border: 3px solid #746010;
+}
+.card.flipped.matched {
     background-color: #28a745;
+    border: 3px solid #105620;
 }
