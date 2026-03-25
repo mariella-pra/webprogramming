@@ -1,0 +1,43 @@
+.piano {
+    position: relative;
+    width: 56em;
+    height: 30em;
+    display: flex;
+}
+
+.key.white {
+    width: 8em;
+    height: 30em;
+    background-color: white;
+    border: 2px solid black;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; 
+    align-items: flex-end; 
+    padding-bottom: 1em;
+    font-weight: bold;
+}
+
+.key.black{
+    width: 5em;
+    height: 15em;
+    background-color:black;
+    color: white;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center; 
+    align-items: flex-end; 
+    padding-bottom: 1em;
+}
+#keyCsharp { left: 5.5em; }
+#keyDsharp { left: 13.5em; }
+#keyFsharp { left: 29.5em; }
+#keyGsharp { left: 37.5em; }
+#keyAsharp { left: 45.5em; }
+
+.pressed {
+    background-color: lightgray !important;
+}

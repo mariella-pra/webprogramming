@@ -1,0 +1,8 @@
+[
+    { "note": "C", "duration": 500 },
+    { "note": "D", "duration": 500 },
+    { "note": "E", "duration": 500 },
+    { "note": "F", "duration": 500 },
+    { "note": "G", "duration": 1000 },
+    { "note": "G", "duration": 1000 }
+]

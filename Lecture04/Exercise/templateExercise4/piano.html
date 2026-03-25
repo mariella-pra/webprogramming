@@ -35,13 +35,35 @@
                 <i class="bi bi-keyboard"></i> <strong>J</strong> - B
             </li>
         </ul>
-        <div id="piano" class="d-flex justify-content-center">
-            <!-- Piano keys with IDs for JavaScript interaction -->
+
+        <div class="d-flex justify-content-center">
+            <div id="piano" class="piano">
+                <div class="key white" data-note="C" id="keyC">C</div>
+                <div class="key white" data-note="D" id="keyD">D</div>
+                <div class="key white" data-note="E" id="keyE">E</div>
+                <div class="key white" data-note="F" id="keyF">F</div>
+                <div class="key white" data-note="G" id="keyG">G</div>
+                <div class="key white" data-note="A" id="keyA">A</div>
+                <div class="key white" data-note="B" id="keyB">B</div>
+
+                <div class="key black" data-note="C#" id="keyCsharp">C#</div>
+                <div class="key black" data-note="D#" id="keyDsharp">D#</div>
+                <div class="key black" data-note="F#" id="keyFsharp">F#</div>
+                <div class="key black" data-note="G#" id="keyGsharp">G#</div>
+                <div class="key black" data-note="A#" id="keyAsharp">A#</div>
+            </div>
         </div>
-        <div id="note-line" class="mt-4">
-            <!-- Place Note Line here -->
-        </div>
+
+        <div id="note-line" class="mt-4"></div>
+        <p class="text-muted mt-2"><small>Keyboard shortcuts: Space - Play/Pause / Esc -  Reset</small></p>
+        
         <!-- Place Buttons here -->
+         <div class="mb-4">
+            <button id="btnLoad" class="btn btn-info">Load Song</button>
+            <button id="btnPlay" class="btn btn-success" disabled>Play</button>
+            <button id="btnPause" class="btn btn-warning" disabled>Pause</button>
+            <button id="btnReset" class="btn btn-danger">Reset</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
